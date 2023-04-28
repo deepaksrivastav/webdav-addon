@@ -1,4 +1,4 @@
-# Home Assistant Community Add-on: Example
+# Home Assistant Community Add-on: WebDAV Server
 
 [![GitHub Release][releases-shield]][releases]
 ![Project Stage][project-stage-shield]
@@ -25,20 +25,7 @@ Example add-on by Community Home Assistant add-ons.
 
 ## About
 
-This is an example add-on for Home Assistant. When started, it displays a
-random quote every 5 seconds.
-
-It shows off several features and structures like:
-
-- Full blown GitHub repository.
-- General Dockerfile structure and setup.
-- The use of the `config.yaml` and `build.yaml` files.
-- General structure on how to use S6 overlay with services.
-- Basic usage of Bashio.
-- Continuous integration and deployment using GitHub Actions.
-- Deployment to the GitHub Container registry.
-- Small use of the Bash function library in our base images.
-- The use of Docker label schema.
+This is an WebDAV server add-on for Home Assistant
 
 [:books: Read the full add-on documentation][docs]
 

@@ -1,19 +1,8 @@
-# Home Assistant Community Add-on: Example
+# Home Assistant Community Add-on: WebDAV
 
-This is an example add-on for Home Assistant. When started, it displays a
-random quote every 5 seconds.
+This is an WebDAV add-on for Home Assistant powered by Caddy and the WebDAV module for Caddy.
 
 It shows off several features and structures like:
-
-- Full blown GitHub repository.
-- General Dockerfile structure and setup.
-- The use of the `config.yaml` and `build.yaml` files.
-- General shell scripting structure (`run.sh`).
-- Quality assurance using CodeClimate.
-- Continuous integration and deployment using GitLab.
-- Usage of the Community Home Assistant Add-ons build environment.
-- Small use of the Bash function library in our base images.
-- The use of Docker label schema.
 
 ## Installation
 
@@ -26,46 +15,51 @@ comparison to installing any other Home Assistant add-on.
    [![Open this add-on in your Home Assistant instance.][addon-badge]][addon]
 
 1. Click the "Install" button to install the add-on.
-1. Start the "Example" add-on.
-1. Check the logs of the "Example" add-on to see it in action.
+1. Start the "WebDAV" add-on.
+1. Check the logs of the "WebDAV" add-on to see it in action.
 
 ## Configuration
 
-Eventought this add-on is just an example add-on, it does come with some
-configuration options to play around with.
-
 **Note**: _Remember to restart the add-on when the configuration is changed._
 
-Example add-on configuration:
+WebDAV add-on configuration:
 
 ```yaml
 log_level: info
-seconds_between_quotes: 5
+ssl: false
+certfile: fullchain.pem
+keyfile: privkey.pem
+username: webdav
+password: password_here
 ```
+**Note**: _This is just an example, don't copy and paste it! Create your own!_
 
-### Option: `log_level`
+### Option: `ssl`
 
-The `log_level` option controls the level of log output by the add-on and can
-be changed to be more or less verbose, which might be useful when you are
-dealing with an unknown issue. Possible values are:
+Enables/Disables SSL (HTTPS). Set it `true` to enable it, `false` otherwise.
 
-- `trace`: Show every detail, like all called internal functions.
-- `debug`: Shows detailed debug information.
-- `info`: Normal (usually) interesting events.
-- `warning`: Exceptional occurrences that are not errors.
-- `error`: Runtime errors that do not require immediate action.
-- `fatal`: Something went terribly wrong. Add-on becomes unusable.
+**Note**: _The SSL settings only apply to direct access and has no effect
+on the Ingress service._
 
-Please note that each level automatically includes log messages from a
-more severe level, e.g., `debug` also shows `info` messages. By default,
-the `log_level` is set to `info`, which is the recommended setting unless
-you are troubleshooting.
+### Option: `certfile`
 
-### Option: `seconds_between_quotes`
+The certificate file to use for SSL.
 
-Sets the number of seconds between the output of each quote. The value
-must be between `1` and `120` seconds. This value is set to `5` seconds by
-default.
+**Note**: _The file MUST be stored in `/ssl/`, which is the default_
+
+### Option: `keyfile`
+
+The private key file to use for SSL.
+
+**Note**: _The file MUST be stored in `/ssl/`, which is the default_
+
+### Option: `username`
+
+Username for the WebDAV user
+
+### Option: `password`
+
+Password for the WebDAV user
 
 ## Changelog & Releases
 
@@ -127,13 +121,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 [addon-badge]: https://my.home-assistant.io/badges/supervisor_addon.svg
-[addon]: https://my.home-assistant.io/redirect/supervisor_addon/?addon=a0d7b954_example&repository_url=https%3A%2F%2Fgithub.com%2Fhassio-addons%2Frepository
+[addon]: https://my.home-assistant.io/redirect/supervisor_addon/?addon=webdav&repository_url=https%3A%2F%2Fgithub.com%2Fdeepaksrivastav%2Fwebdav-addon
 [contributors]: https://github.com/hassio-addons/addon-example/graphs/contributors
 [discord-ha]: https://discord.gg/c5DvZ4e
 [discord]: https://discord.me/hassioaddons
 [forum]: https://community.home-assistant.io/t/repository-community-hass-io-add-ons/24705?u=frenck
 [frenck]: https://github.com/frenck
-[issue]: https://github.com/hassio-addons/addon-example/issues
+[issue]: https://github.com/deepaksrivastav/webdav-addon/issues
 [reddit]: https://reddit.com/r/homeassistant
-[releases]: https://github.com/hassio-addons/addon-example/releases
+[releases]: https://github.com/deepaksrivastav/webdav-addon/releases
 [semver]: http://semver.org/spec/v2.0.0.html
