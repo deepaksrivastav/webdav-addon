@@ -1,6 +1,6 @@
 # Home Assistant Community Add-on: WebDAV
 
-This is an WebDAV add-on for Home Assistant powered by Caddy and the WebDAV module for Caddy.
+This is an WebDAV add-on for Home Assistant powered by Rclone.
 
 It shows off several features and structures like:
 

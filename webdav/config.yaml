@@ -1,8 +1,8 @@
 ---
-name: WebDAV (powered by Caddy)
+name: WebDAV (powered by rclone)
 version: dev
 slug: webdav
-description: A Caddy powered WebDAV server
+description: An rclone powered WebDAV server
 url: https://github.com/deepaksrivastav/webdav-addon
 codenotary: deepaksrivastav@gmail.com
 webui: "[PROTO:ssl]://[HOST]:[PORT:8765]"

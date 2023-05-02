@@ -1,13 +1,5 @@
 ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base:6.2.5
 ###############################################################################
-# Use caddy builder to build caddy with custom modules
-###############################################################################
-FROM caddy:2.6.4-builder AS builder
-
-## Build caddy with webdav module
-RUN xcaddy build --with github.com/mholt/caddy-webdav
-
-###############################################################################
 # Build the actual add-on.
 ###############################################################################
 # hadolint ignore=DL3006
@@ -16,8 +8,14 @@ FROM ${BUILD_FROM}
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Get the caddy binary from the official image
-COPY --from=builder /usr/bin/caddy /usr/bin/caddy
+# add rclone
+# hadolint ignore=DL3009
+RUN \
+    apt-get update \
+    \
+    && apt-get install -y --no-install-recommends \
+        rclone=1.53.3-1+b6 \
+    && apt-get clean 
 
 # Copy root filesystem
 COPY rootfs /

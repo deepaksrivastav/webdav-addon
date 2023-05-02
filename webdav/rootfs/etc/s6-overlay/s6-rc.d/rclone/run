@@ -3,7 +3,7 @@
 # ==============================================================================
 # Home Assistant Community Add-on: WebDAV
 # WebDAV init script, runs before any other service
-# This scripts generates password hash and prepares the caddy configuration file
+# This scripts runs a WebDAV server using rclone
 # ==============================================================================
 declare username
 declare password
@@ -12,23 +12,20 @@ declare keyfile
 
 bashio::config.require.ssl
 
-bashio::log.info "Initializing caddy configuration"
+bashio::log.info "Initializing rclone.."
 username=$(bashio::config 'username')
 password=$(bashio::config 'password')
 certfile=$(bashio::config 'certfile')
 keyfile=$(bashio::config 'keyfile')
 
-# calculate password hash
-hashed_password=$(echo ${password} | caddy hash-password)
-
+# rclone SSL options
+rclone_ssl_options=""
 if bashio::config.true 'ssl'; then
-	sed -e "s/WEBDAV_USER/${username}/g" \
-		-e "s@WEBDAV_PASSWORD@${hashed_password}@g" \
-		-e "s@CERTFILE@${certfile}@g" \
-		-e "s@KEYFILE@${keyfile}@g" \
-		/etc/caddy/Caddyfile.tmpl > /etc/caddy/Caddyfile
-else 
-	sed -e "s/WEBDAV_USER/${username}/g" \
-		-e "s@WEBDAV_PASSWORD@${hashed_password}@g" \
-		/etc/caddy/Caddyfile.nossl.tmpl > /etc/caddy/Caddyfile
+	rclone_ssl_options=" --cert /ssl/${certfile} --key /ssl/${keyfile} "
 fi
+
+rclone serve webdav --user ${username} \
+                    --pass ${password} \
+                    --addr :8765 \
+                    ${rclone_ssl_options} \
+                    /data
